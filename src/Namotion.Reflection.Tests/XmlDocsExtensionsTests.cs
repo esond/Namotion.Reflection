@@ -139,6 +139,12 @@ namespace Namotion.Reflection.Tests
             /// <summary>
             ///     This summary is indented.
             /// </summary>
+            /// <response code="201">
+            ///     Account created
+            /// </response>
+            /// <remarks>
+            ///     These remarks are indented.
+            /// </remarks>
             public string Foo { get; set; }
         }
 
@@ -166,6 +172,33 @@ namespace Namotion.Reflection.Tests
 
             //// Assert
             Assert.Equal("This summary is indented.", summary); 
+        }
+        
+        [Fact]
+        public void When_tag_is_indented_then_it_is_trimmed()
+        {
+            //// Arrange
+            XmlDocs.ClearCache();
+
+            //// Act
+            var element = typeof(WithIndentedXmlDoc).GetProperty("Foo").GetXmlDocsElement();
+            var responses = element.Elements("response");
+
+            //// Assert
+            Assert.Equal("Account created", responses.Single().Value);
+        }
+        
+        [Fact]
+        public void When_remarks_are_indented_then_they_are_trimmed()
+        {
+            //// Arrange
+            XmlDocs.ClearCache();
+
+            //// Act
+            var remarks = typeof(WithIndentedXmlDoc).GetProperty("Foo").GetXmlDocsRemarks();
+
+            //// Assert
+            Assert.Equal("These remarks are indented.", remarks);
         }
 
         public abstract class BaseBaseClass

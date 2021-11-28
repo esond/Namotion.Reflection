@@ -127,7 +127,7 @@ namespace Namotion.Reflection
         /// <returns>The contents of the "summary" tag for the member.</returns>
         public static string GetXmlDocsSummary(this Type type)
         {
-            return GetXmlDocsTag((MemberInfo)type.GetTypeInfo(), "summary").Trim();
+            return GetXmlDocsTag((MemberInfo)type.GetTypeInfo(), "summary");
         }
 
         /// <summary>Returns the contents of the "remarks" XML documentation tag for the specified member.</summary>
@@ -152,7 +152,7 @@ namespace Namotion.Reflection
         /// <returns>The contents of the "summary" tag for the member.</returns>
         public static string GetXmlDocsSummary(this MemberInfo member)
         {
-            var docs = GetXmlDocsTag(member, "summary").Trim();
+            var docs = GetXmlDocsTag(member, "summary");
 
             if (string.IsNullOrEmpty(docs) && member is PropertyInfo propertyInfo)
             {
@@ -251,7 +251,7 @@ namespace Namotion.Reflection
 
             var documentationPath = GetXmlDocsPath(member.Module.Assembly);
             var element = GetXmlDocsElement(member, documentationPath!);
-            return ToXmlDocsContent(element?.Element(tagName));
+            return ToXmlDocsContent(element?.Element(tagName)).Trim();
         }
 
         /// <summary>Returns the property summary of a Record type which is read from the param tag on the type.</summary>
