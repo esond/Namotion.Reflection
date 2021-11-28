@@ -130,6 +130,43 @@ namespace Namotion.Reflection.Tests
             //// Assert
             Assert.Equal("This are some tags.", summary);
         }
+        
+        /// <summary>
+        ///     This summary is indented.
+        /// </summary>
+        public class WithIndentedXmlDoc
+        {
+            /// <summary>
+            ///     This summary is indented.
+            /// </summary>
+            public string Foo { get; set; }
+        }
+
+        [Fact]
+        public void When_property_summary_is_indented_then_it_is_trimmed()
+        {
+            //// Arrange
+            XmlDocs.ClearCache();
+
+            //// Act
+            var summary = typeof(WithIndentedXmlDoc).GetProperty("Foo").GetXmlDocsSummary();
+
+            //// Assert
+            Assert.Equal("This summary is indented.", summary);
+        }
+
+        [Fact]
+        public void When_type_summary_is_indented_then_it_is_trimmed()
+        {
+            //// Arrange
+            XmlDocs.ClearCache();
+
+            //// Act
+            var summary = typeof(WithIndentedXmlDoc).GetXmlDocsSummary();
+
+            //// Assert
+            Assert.Equal("This summary is indented.", summary); 
+        }
 
         public abstract class BaseBaseClass
         {

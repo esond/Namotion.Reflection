@@ -127,7 +127,7 @@ namespace Namotion.Reflection
         /// <returns>The contents of the "summary" tag for the member.</returns>
         public static string GetXmlDocsSummary(this Type type)
         {
-            return GetXmlDocsTag((MemberInfo)type.GetTypeInfo(), "summary");
+            return GetXmlDocsTag((MemberInfo)type.GetTypeInfo(), "summary").Trim();
         }
 
         /// <summary>Returns the contents of the "remarks" XML documentation tag for the specified member.</summary>
@@ -152,7 +152,7 @@ namespace Namotion.Reflection
         /// <returns>The contents of the "summary" tag for the member.</returns>
         public static string GetXmlDocsSummary(this MemberInfo member)
         {
-            var docs = GetXmlDocsTag(member, "summary");
+            var docs = GetXmlDocsTag(member, "summary").Trim();
 
             if (string.IsNullOrEmpty(docs) && member is PropertyInfo propertyInfo)
             {
